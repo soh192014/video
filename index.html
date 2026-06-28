@@ -2,105 +2,76 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>Video Platform</title>
-<script src="data.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Video</title>
 
 <style>
 body{
     margin:0;
-    background:#0f0f0f;
-    font-family:Arial;
-    color:white;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    /* 🌊 aqua + teal 背景 */
+    background: linear-gradient(135deg, aqua, teal);
+    font-family: Arial, sans-serif;
+    overflow:hidden;
 }
 
-header{
-    padding:20px;
-    font-size:24px;
-    background:#181818;
-    position:sticky;
-    top:0;
+/* 🎬 主容器 */
+.card{
+    width:90%;
+    max-width:900px;
+    aspect-ratio:16/9;
+
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(20px);
+
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+
+    position:relative;
 }
 
-.search{
-    margin-top:10px;
-}
-
-input{
+/* 🎥 iframe 视频 */
+iframe{
     width:100%;
-    padding:10px;
-    border-radius:10px;
+    height:100%;
     border:none;
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-    gap:15px;
-    padding:20px;
-}
-
-.card{
-    background:#1e1e1e;
-    border-radius:12px;
-    overflow:hidden;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-.card:hover{
-    transform:scale(1.05);
-}
-
-.card img{
-    width:100%;
-}
-
-.card h3{
-    margin:10px;
-    font-size:16px;
+/* 🎯 标题 */
+.title{
+    position:absolute;
+    top:15px;
+    left:15px;
+    color:white;
+    font-size:18px;
+    background:rgba(0,0,0,0.3);
+    padding:6px 12px;
+    border-radius:10px;
+    backdrop-filter:blur(10px);
 }
 </style>
 </head>
 
 <body>
 
-<header>
-🎬 My Video Platform
-<input class="search" id="search" placeholder="搜索视频...">
-</header>
+<div class="card">
 
-<div class="grid" id="grid"></div>
+    <div class="title">🎬 My Video Player</div>
 
-<script>
+    <!-- 🎥 Google Drive 视频 -->
+    <iframe
+        src="https://drive.google.com/file/d/1oB_z3em4Nf0d6Wqq8qgxPyMOUNwBV6ph/preview"
+        allow="autoplay"
+        allowfullscreen>
+    </iframe>
 
-const grid = document.getElementById("grid");
-const search = document.getElementById("search");
-
-function render(list){
-    grid.innerHTML = "";
-
-    list.forEach(v => {
-        grid.innerHTML += `
-        <div class="card" onclick="openVideo('${v.id}')">
-            <img src="${v.cover}">
-            <h3>${v.title}</h3>
-        </div>`;
-    });
-}
-
-function openVideo(id){
-    window.location.href = "watch.html?id=" + id;
-}
-
-// 搜索
-search.oninput = () => {
-    const q = search.value.toLowerCase();
-    render(videos.filter(v => v.title.toLowerCase().includes(q)));
-};
-
-render(videos);
-
-</script>
+</div>
 
 </body>
 </html>
